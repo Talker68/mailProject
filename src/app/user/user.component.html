@@ -1,0 +1,22 @@
+<form #userForm="ngForm" (ngSubmit)="submit()">
+    <p *ngIf="isNew" class="h2 mb-3">Введите данные о новом пользователе:</p>
+    <p *ngIf="!isNew" class="h2 mb-3">Введите изменения:</p>
+    <p>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="Имя" #name="ngModel" name="name" [(ngModel)]="user.name" required>
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="Почта" #email="ngModel" name="email" [(ngModel)]="user.email"
+        required pattern="[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_])*\.[a-zA-Z0-9_]+">
+      </md-input-container>
+    </p>
+    <div [hidden]="name.valid || !name.touched"
+        class="alert alert-danger text-left">
+      Имя введено неверно
+    </div>
+    <div [hidden]="email.valid || !email.touched"
+        class="alert alert-danger text-left">
+      Почтовый адрес введен неверно
+    </div>
+    <button type="submit" md-raised-button>Сохранить</button>
+</form>

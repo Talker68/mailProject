@@ -1,0 +1,52 @@
+<div class="input-group mb-5">
+    <span class="input-group-addon" id="sizing-addon2">Фильтр</span>
+    <input type="text" placeholder="Введите текст" (input)="search($event.target.value)">    
+</div>
+<table class="table table-hover">
+<thead class="thead-default">
+    <tr>  
+        <th [ngStyle]="{'width': '4%'}">
+            <md-checkbox [(ngModel)]="selectedAll" (change)="selectAll($event.checked)"></md-checkbox>
+        </th>              
+        <th [ngStyle]="{'width': '8%'}" class="align-middle">#</th>
+        <th [ngStyle]="{'width': '8%'}" class="align-middle">Важное</th>
+        <th [ngStyle]="{'width': '20%'}" class="align-middle">От кого</th>
+        <th class="align-middle">Текст</th>
+        <th [ngStyle]="{'width': '15%'}" class="text-right align-middle">
+            <span mdTooltip="Удалить выбранные" mdTooltipPosition="above">
+                <button md-icon-button (click)="clearSelected()">
+                    <md-icon>delete</md-icon>                                                              
+                </button>
+            </span> 
+        </th>
+    </tr>
+</thead>    
+<tbody>            
+    <tr
+    *ngFor="let letter of mailBox.letters | filterMail:searchString; let i = index;"           
+    [class.selected]="td"    
+    (mouseover)="btns.hidden = false"
+    (mouseleave)="btns.hidden = true"> 
+        <td [ngStyle]="{'width': '4%'}">
+            <md-checkbox [(ngModel)]="letter.selected"></md-checkbox>
+        </td>               
+        <th scope="row" [ngStyle]="{'width': '8%'}">{{i+1}}</th>
+        <td>
+            <md-checkbox [(ngModel)]="letter.important"></md-checkbox>
+        </td>
+        <td>
+            <p>{{letter.from}}</p>
+        </td>
+        <td [ngStyle]="{'cursor': 'pointer'}" (click)="openLetter(i)">
+            <p>{{letter.message}}</p>
+        </td>
+        <td [ngStyle]="{'width': '15%'}" class="text-right">
+            <div hidden #btns>                  
+                    <button md-icon-button (click)="deleteLetter(i)">
+                        <md-icon>delete</md-icon></button>              
+            </div>
+        </td>
+    </tr>    
+</tbody>
+</table>
+<h1 *ngIf="mailBox.letters.length == 0" class="display-4 text-center">В данном ящике нету писем.</h1>

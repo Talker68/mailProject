@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row text-right">
+    <nav class="navbar navbar-light bg-faded mb-3" [ngStyle]="{'width': '100%'}">
+      <h1 class="display-4">Почтовый клиент</h1>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-3 right">
+      <div class="list-group mb-3">
+        <a *ngFor="let mailBox of mailBoxes"
+        routerLink="mailbox/{{mailBox.name}}"
+        class="list-group-item"
+        [ngClass]="{active: mailBox.name == selectedBox}">
+          {{mailBox.name}} ({{mailBox.letters.length}})
+        </a>      
+      </div>
+      <a
+      md-raised-button
+      routerLink="users"
+      [ngStyle]="{'width': '100%'}"
+      class="mb-3">Адресная книга</a>
+      <div
+      [ngStyle]="{'text-align': 'right', 'width': '100%'}"
+      *ngIf="isMailBox">
+          <button md-fab mdTooltip="Написать письмо" mdTooltipPosition="left" (click)="addLetter()"><md-icon>add</md-icon></button>
+      </div>
+      <div
+      [ngStyle]="{'text-align': 'right', 'width': '100%'}"
+      *ngIf="!isMailBox">
+          <button mdTooltip="Добавить адрес" color="warn" mdTooltipPosition="left" md-fab (click)="addUser()"><md-icon>add</md-icon></button>
+      </div>
+    </div>
+    <div class="col-9">
+      <h1 *ngIf="selectedBox === ''" class="display-4">Выберите почтовый ящик, чтобы начать работу</h1>        
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

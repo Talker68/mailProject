@@ -1,0 +1,49 @@
+<div class="input-group mb-5">
+    <span class="input-group-addon" id="sizing-addon2">Фильтр</span>
+    <input type="text" placeholder="Введите имя" (input)="search($event.target.value)">    
+</div>
+<table class="table table-hover">
+<thead class="thead-default">
+    <tr>  
+        <th [ngStyle]="{'width': '4%'}">
+            <md-checkbox [(ngModel)]="selectedAll" (change)="selectAll($event.checked)"></md-checkbox>
+        </th>              
+        <th [ngStyle]="{'width': '8%'}" class="align-middle">#</th>
+        <th [ngStyle]="{'width': '8%'}" class="align-middle">Имя</th>
+        <th [ngStyle]="{'width': '20%'}" class="align-middle">Почта</th>
+        <th [ngStyle]="{'width': '15%'}" class="text-right align-middle">
+            <span mdTooltip="Удалить выбранные" mdTooltipPosition="above">
+                <button md-icon-button (click)="clearSelected()">
+                    <md-icon>delete</md-icon>                                                              
+                </button>
+            </span> 
+        </th>
+    </tr>
+</thead>    
+<tbody>            
+    <tr
+    *ngFor="let user of users | filterUsers:searchString; let i = index;"           
+    [class.selected]="td"    
+    (mouseover)="btns.hidden = false"
+    (mouseleave)="btns.hidden = true"
+    > 
+        <td [ngStyle]="{'width': '4%'}">
+            <md-checkbox [(ngModel)]="user.selected"></md-checkbox>
+        </td>               
+        <th scope="row" [ngStyle]="{'width': '8%'}">{{i+1}}</th>
+        <td [ngStyle]="{'cursor': 'pointer'}" (click)="openUser(i)">
+            <p>{{user.name}}</p>
+        </td>
+        <td [ngStyle]="{'cursor': 'pointer'}" (click)="openUser(i)">
+            <p>{{user.email}}</p>
+        </td>
+        <td [ngStyle]="{'width': '15%'}" class="text-right">
+            <div hidden #btns>                  
+                    <button md-icon-button (click)="deleteUser(i)">
+                        <md-icon>delete</md-icon></button>              
+            </div>
+        </td>
+    </tr>    
+</tbody>
+</table>
+<h1 *ngIf="users.length == 0" class="display-4 text-center">Адресная книга пуста.</h1>

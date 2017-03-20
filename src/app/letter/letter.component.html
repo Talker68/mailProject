@@ -1,0 +1,27 @@
+<form #myForm="ngForm" (ngSubmit)="sendLetter()">
+    <md-input-container class="full-width">
+      <input disabled mdInput placeholder="Отправитель" name="from" [(ngModel)]="letter.from">
+    </md-input-container>
+    <md-input-container class="full-width">
+      <input [disabled]="!outcoming" mdInput #to="ngModel" placeholder="Получатель" name="to" [(ngModel)]="letter.to"
+      required pattern="[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_])*\.[a-zA-Z0-9_]+">
+    </md-input-container>
+    <div class="list-group" *ngIf="letter.to.length > 0">
+      <a
+      *ngFor="let user of users | filterUsers:letter.to; let i = index;"
+      class="list-group-item list-group-item-action" (click)="select(user.email)">{{user.name}} | {{user.email}}</a>
+    </div>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Тема" #name="ngModel" name="theme" [(ngModel)]="letter.theme">
+    </md-input-container>
+    <md-input-container class="full-width">
+      <textarea class="msg-height" mdInput #msg="ngModel" placeholder="Текст письма" name="msg" [(ngModel)]="letter.message"></textarea>
+    </md-input-container>
+    <div [hidden]="to.valid || !to.touched"
+        class="alert alert-danger text-left">
+      Адресат задан неверно
+    </div>
+    <button *ngIf="outcoming" type="submit" [disabled]="myForm.invalid" class="btn btn-default">
+        Отправить
+    </button>
+</form>
