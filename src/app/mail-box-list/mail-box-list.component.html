@@ -1,7 +1,8 @@
 <div class="container-fluid">
-  <div class="row text-right">
-    <nav class="navbar navbar-light bg-faded mb-3" [ngStyle]="{'width': '100%'}">
-      <h1 class="display-4">Почтовый клиент</h1>
+  <div class="row ">
+    <nav class="navbar navbar-light bg-faded mb-3" [ngStyle]="{'width': '100%'}">      
+      <h1 class="display-4 text-right">Почтовый клиент</h1>
+      <p class="h3 text-right">{{user.email}}</p>
     </nav>
   </div>
   <div class="row">
@@ -31,7 +32,7 @@
       </div>
     </div>
     <div class="col-9">
-      <h1 *ngIf="selectedBox === ''" class="display-4">Выберите почтовый ящик, чтобы начать работу</h1>        
+      <h1 *ngIf="selectedBox === ''" class="display-4">Добро пожаловать, {{user.name}}. Выберите почтовый ящик, чтобы начать работу</h1>        
       <router-outlet></router-outlet>
     </div>
   </div>

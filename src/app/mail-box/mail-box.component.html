@@ -10,8 +10,9 @@
         </th>              
         <th [ngStyle]="{'width': '8%'}" class="align-middle">#</th>
         <th [ngStyle]="{'width': '8%'}" class="align-middle">Важное</th>
+        <th class="align-middle">Дата</th>
         <th [ngStyle]="{'width': '20%'}" class="align-middle">От кого</th>
-        <th class="align-middle">Текст</th>
+        <th class="align-middle">Текст</th>        
         <th [ngStyle]="{'width': '15%'}" class="text-right align-middle">
             <span mdTooltip="Удалить выбранные" mdTooltipPosition="above">
                 <button md-icon-button (click)="clearSelected()">
@@ -33,6 +34,9 @@
         <th scope="row" [ngStyle]="{'width': '8%'}">{{i+1}}</th>
         <td>
             <md-checkbox [(ngModel)]="letter.important"></md-checkbox>
+        </td>
+        <td>
+            <p>{{letter.time | date:'fullDate' }}</p>
         </td>
         <td>
             <p>{{letter.from}}</p>

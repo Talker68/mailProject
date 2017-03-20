@@ -3,6 +3,8 @@ import { logins } from './login/logins';
 import { Login } from './login/login';
 import { Injectable } from '@angular/core';
 
+import 'rxjs/add/observable/of';
+
 @Injectable()
 export class AuthService {
   token: Date;
@@ -12,6 +14,10 @@ export class AuthService {
 
   constructor() {
     this.loggedIn = false;
+  }
+
+  getUser(): Login {
+    return this.user;
   }
 
   getLogin(): string {
@@ -52,7 +58,7 @@ export class AuthService {
 
   checkToken(): boolean {
     const now = new Date();
-    if (now.getTime() - this.token.getTime() > 300 * 1000) {
+    if (now.getTime() - this.token.getTime() > 120 * 1000) {
       return false;
     }
 

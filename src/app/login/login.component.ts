@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   loginName: string;
   pswd: string;
   returnUrl: string;
+  fail = false;
 
   constructor(
       private route: ActivatedRoute,
@@ -31,6 +32,8 @@ export class LoginComponent implements OnInit {
             result => {
               if (result) {
                 this.router.navigate([this.returnUrl]);
+              } else {
+                this.fail = true;
               }
             });
   }

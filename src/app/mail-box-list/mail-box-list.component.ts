@@ -1,3 +1,4 @@
+import { Login } from './../login/login';
 import { MailBox } from './../mail-box/mail-box';
 import { AuthService } from './../auth.service';
 import { mailBoxes } from './../mail-box/mailboxes';
@@ -16,6 +17,7 @@ export class MailBoxListComponent implements OnInit {
   private selectedBox = '';
   private loggedIn = false;
   private isMailBox = true;
+  private user: Login;
 
   constructor(private _router: Router,
     private _route: ActivatedRoute,
@@ -45,6 +47,8 @@ export class MailBoxListComponent implements OnInit {
     this._route.data.pluck('mailBoxes').subscribe((data: MailBox[]) => {
       this.mailBoxes = data;
     });
+
+    this.user = this._authService.getUser();
   }
 
 }

@@ -31,6 +31,7 @@ export class MailBoxComponent implements OnInit, OnDestroy {
     this._route.params
       .subscribe((params: Params) => {
         this.mailBox = this._mailBoxService.getMailBox(params['name']);
+        this.mailBox.letters = this.mailBox.letters.sort((a, b) => b.time.getTime() - a.time.getTime());
       });
   }
 

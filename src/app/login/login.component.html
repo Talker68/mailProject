@@ -11,6 +11,10 @@
           <input mdInput type="password" placeholder="Пароль" name="pswd" [(ngModel)]="pswd" required>
         </md-input-container>
       </p>
+      <div [ngStyle]="{'width': '100%'}" [hidden]="!fail"
+          class="alert alert-danger text-left">
+        Данный пользователь не найден. Попробуйте еще раз.
+      </div>
       <div class="text-center">
         <button type="submit" md-raised-button>Войти</button>
       </div>
