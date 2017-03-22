@@ -21,20 +21,19 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._route.params
-    .subscribe((params: Params) => {
-      if (params['id'] === 'new') {
-        this.isNew = true;
-        this.user = {selected: false, name: '', email: ''};
-      } else {
-        this.id = +params['id'];
-        this.user = this._userService.getUser(this.id);
+    this.user$ = this._route.params
+    .pluck('id')
+    .subscribe((id: string) => {
+      if (!id) {
+        return Observable.of({selected: false, name: '', email: ''});
       }
+      
+      return this._userService.getUser(this.id);      
     });
   }
 
   submit() {
-    if (this.isNew) {
+    if (!this.user.id) {
       this.addUser();
     } else {
       this.updateUser();
@@ -42,8 +41,9 @@ export class UserComponent implements OnInit {
   }
 
   addUser() {
-    this._userService.addUser(this.user);
-    this._router.navigateByUrl('mailboxes/users');
+    this.user$.switchMap(() => this._userService.addUser(this.user)).subscribe(() => {
+      this._router.navigateByUrl('mailboxes/users');
+    }).catch(() => {});   
   }
 
   updateUser() {
